@@ -198,7 +198,7 @@ function openBoardPage(element) {
 function getValuesForTaskArr() {
     task2.taskId = calcTaskId();
     task2.status = taskJson[activTaskNumber] ? taskJson[activTaskNumber].status : taskStatus;
-    task2.urgency = task2.urgency === '' ? task2.urgency = 'low' : task2.urgency;
+    task2.urgency = task2.urgency === '' ? task2.urgency = 'medium' : task2.urgency;
     getValuesFromForm();
     getSubtaskFromForm();
 }

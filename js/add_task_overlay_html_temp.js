@@ -44,7 +44,7 @@ function htmlAddTaskOverlay() {
                                     <span for="idUrgentIMGAddTaskOv">Urgent</span>
                                     <img id="idurgentIMGAddTaskOv" src="../assets/img/prio_urgent.svg" class="">
                                 </div>
-                                <div id="idmediumContainerAddTaskOv" onclick="highlight('medium')" class="prioContainerAddTaskOv">
+                                <div id="idmediumContainerAddTaskOv" onclick="highlight('medium')" class="medium prioContainerAddTaskOv">
                                     <span for="idMediumIMGAddTaskOv">Medium</span>
                                     <img id="idmediumIMGAddTaskOv" src="../assets/img/prio_medium.svg" class="">
                                 </div>

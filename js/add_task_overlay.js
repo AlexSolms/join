@@ -1,10 +1,12 @@
 let expanded = false;
+let addTaskcontainer = 'empty';
 let subtaskPlus = true;
 //let currentPrio = '';
 let subtaskObj = [];
 let activTaskNumber = '';
 let task2 = {};
 let taskStatus = 'toDo';
+let activeDesk;
 
 /**
  * THis function resets the task object
@@ -49,57 +51,6 @@ function removeHighlight() {
         document.getElementById('id' + element + 'IMGAddTaskOv').src = `../assets/img/prio_${element}.svg`
     });
     task2.urgency = '';
-}
-
-/**
- * This function is for showing the contactlist
- * 
- * @param {string} desk for identifying the correct assingedTo element
- */
-function showUserNames(desk) {
-    if (!expanded) {
-        toggleDivUsrDropVsMemberDisk(desk);
-        expanded = true;
-    } else {
-        toggleDivUsrDropVsMemberDisk(desk);
-        document.getElementById('idSelectedUserAddTask' + desk).innerHTML = taskOverlayMemberDiskContainer();
-        expanded = false;
-    }
-}
- 
-
-function handleClickEvent(event) {
-    var textElement = event.target;
-
-    var allTextContainer = document.getElementById('idInputAssignedToContainerAddTaskOv');
-    if (allTextContainer.contains(textElement)) {
-        console.log('Das angeklickte Element befindet sich im Container idContentContainerAddTaskOv.');
-    } else {
-        console.log('Das angeklickte Element befindet sich außerhalb des Containers.');
-
-        // Hier kannst du je nach Bedarf verschiedene Aktionen ausführen
-        if (event.currentTarget.id === 'idBackgroundContainer') {
-            document.getElementById('idChkSelectMultUserOuterCon').classList.add('d-none');
-        }
-    }
-}
-
-document.getElementById('idBackgroundContainer').addEventListener('click', handleClickEvent);
-document.getElementById('idAddTaskForm').addEventListener('click', handleClickEvent);
-
-
-
-
-/**
- * this function is for showing selected members as disc below toe correct assingedTo element
- * 
- * @param {string} desk - for identifying the correct assingedTo element
- */
-function toggleDivUsrDropVsMemberDisk(desk) {
-    let checkboxes = document.getElementById('idChkSelectMultUserOuterCon' + desk);
-    let memberDisks = document.getElementById('idSelectedUserAddTask' + desk);
-    memberDisks.classList.toggle('d-none');
-    checkboxes.classList.toggle('d-none');
 }
 
 /**
@@ -262,6 +213,79 @@ async function loadContacts(desk) {
     }
     document.getElementById('idChkSelectMultUserOuterCon' + desk).innerHTML += userOvHTMLButton();
 }
+
+/**
+ * This function is for showing the contactlist
+ * 
+ * @param {string} desk for identifying the correct assingedTo element
+ */
+function showUserNames(desk) {
+    activeDesk = desk;
+    if (!expanded) {
+        toggleAssignedToDorpdown(desk);
+        //toggleDivUsrDropVsMemberDisk(desk);
+       // expanded = true;
+       document.getElementById('idAddTaskForm').addEventListener('click', handleClickEvent);
+        desk == '' || desk == 'Ov' ? addTaskcontainer = 'small' : addTaskcontainer = 'big';
+        console.log('addTaskcontainer: ', addTaskcontainer);
+    } else {
+        toggleAssignedToDorpdown(desk);
+        //toggleDivUsrDropVsMemberDisk(desk);
+        //document.getElementById('idSelectedUserAddTask' + desk).innerHTML = taskOverlayMemberDiskContainer();
+       // expanded = false;
+        addTaskcontainer = 'empty';
+    }
+}
+
+function toggleAssignedToDorpdown(desk) {
+    toggleDivUsrDropVsMemberDisk(desk);
+    if(expanded)document.getElementById('idSelectedUserAddTask' + desk).innerHTML = taskOverlayMemberDiskContainer();
+    expanded = !expanded;
+}
+
+document.getElementById('idBackgroundContainer').addEventListener('click', handleClickEvent);
+document.addEventListener('DOMContentLoaded', function () {
+    let addTaskForm = document.getElementById('idAddTaskForm');
+    if (addTaskForm) addTaskForm.addEventListener('click', handleClickEvent);
+    else console.log("Element mit der ID 'idAddTaskForm' wurde nicht gefunden."); // ich vermeide hier zwar den Fehler, aber gleichzeitig wird halt der Eventhandler nicht mehr getriggert wenn ich add Task klicke
+});
+
+function handleClickEvent(event) {
+    let textElement = event.target;
+    let container;
+    if (expanded) {
+        if (addTaskcontainer == 'big') container = document.getElementById('idInputAssignedToContainerDesktopAddTaskOv');
+        else container = document.getElementById('idInputAssignedToContainerAddTaskOv');
+
+        if (container.contains(textElement)) {
+            console.log('Das angeklickte Element befindet sich im Container idContentContainerAddTaskOv.');
+        } else {
+            console.log('Das angeklickte Element befindet sich außerhalb des Containers.');
+            toggleAssignedToDorpdown(activeDesk);
+            // Hier kannst du je nach Bedarf verschiedene Aktionen ausführen
+            if (event.currentTarget.id === 'idBackgroundContainer') {
+                document.getElementById('idChkSelectMultUserOuterCon').classList.add('d-none');
+            }
+        }
+    }
+}
+
+
+
+
+
+/**
+ * this function is for showing selected members as disc below toe correct assingedTo element
+ * 
+ * @param {string} desk - for identifying the correct assingedTo element
+ */
+function toggleDivUsrDropVsMemberDisk(desk) {
+    let checkboxes = document.getElementById('idChkSelectMultUserOuterCon' + desk);
+    let memberDisks = document.getElementById('idSelectedUserAddTask' + desk);
+    memberDisks.classList.toggle('d-none');
+    checkboxes.classList.toggle('d-none');
+}
+
 
 /**
  * This function recaluclates all task ids and retrun a task id for the new added task

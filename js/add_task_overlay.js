@@ -66,6 +66,29 @@ function showUserNames(desk) {
         expanded = false;
     }
 }
+ 
+
+function handleClickEvent(event) {
+    var textElement = event.target;
+
+    var allTextContainer = document.getElementById('idInputAssignedToContainerAddTaskOv');
+    if (allTextContainer.contains(textElement)) {
+        console.log('Das angeklickte Element befindet sich im Container idContentContainerAddTaskOv.');
+    } else {
+        console.log('Das angeklickte Element befindet sich außerhalb des Containers.');
+
+        // Hier kannst du je nach Bedarf verschiedene Aktionen ausführen
+        if (event.currentTarget.id === 'idBackgroundContainer') {
+            document.getElementById('idChkSelectMultUserOuterCon').classList.add('d-none');
+        }
+    }
+}
+
+document.getElementById('idBackgroundContainer').addEventListener('click', handleClickEvent);
+document.getElementById('idAddTaskForm').addEventListener('click', handleClickEvent);
+
+
+
 
 /**
  * this function is for showing selected members as disc below toe correct assingedTo element

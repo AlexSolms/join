@@ -1,3 +1,6 @@
+/**
+ * this function contains the HTML code for the add Task ovlerlay
+ */
 function htmlAddTaskOverlay() {
     document.getElementById('idAddTaskOverlay').innerHTML = /*html*/`
     <section id="idBgAddTaskOverlay" class="backgroundAddTaskOverlay" onclick="closeAddTaskOv('idBgAddTaskOverlay')">
@@ -112,7 +115,10 @@ function htmlAddTaskOverlay() {
     </section>`
 }
 
-
+/**
+ * this function returns the HTML code for the add task button
+ * @returns - HTML code for add contact button
+ */
 function userOvHTMLButton() {
     return /*html*/`
     <div id="idChkSelectMultUserButtonOv" class="d-flex  ">
@@ -125,7 +131,14 @@ function userOvHTMLButton() {
     </div>`
 }
 
-
+/**
+ * this function returns the code for a member badge
+ * @param {String} memberName - name of member
+ * @param {String} memberColor - background color for the member badge
+ * @param {String} memberinitials - initials of member
+ * @param {Number} i - to address the coorect HTML ids
+ * @returns - member badge
+ */
 function userOvHTML(memberName, memberColor, memberinitials, i) {
     return `
     <div id="idAssingedToCon${i}" class="assingedToMembers hoverAssingedTo" onclick="toggleChkBox(${i})">
@@ -139,7 +152,11 @@ function userOvHTML(memberName, memberColor, memberinitials, i) {
     </div>`
 }
 
-
+/**
+ * this function provides the HTML code for the subtasks for a task
+ * @param {Number} count - the subtask number
+ * @returns - HTML Template for sub tastl
+ */
 function subtaskHTML(count) {
     return /*html*/`
     <li id="idSubTask${count}" class="subTaskElement">
@@ -162,8 +179,3 @@ function subtaskHTML(count) {
     </li>`
 }
 
-/* function addTaskpopupHTML() {
-    return `<div id="idAddTaskPopup" class="addTaskPopup">
-        <p>Task successfully created!</p>
-        </div>`
-} */

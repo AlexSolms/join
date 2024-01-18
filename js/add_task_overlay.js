@@ -366,29 +366,3 @@ function callAddContact() {
     window.location.href = "../html/contacts.html";
 }
 
-/**
- * this eventlistenet shold check if the button was clicked, but is still not working
- */
-/* document.body.addEventListener('click', function (event) {
-    console.log('Event-Listener wurde aufgerufen');
-    console.log('Event-Target:', event.target);
-    if (event.target && event.target.id === 'idSubmitButtonAddTaskOv') {
-      console.log('Button wurde geklickt');
-      emptyRequiredShow('idInputTitleAddTaskOv', 'idSpanTitle');
-      emptyRequiredShow('idInputDescriptionAddTaskOv', 'idSpanDesr');
-      emptyRequiredShow('idInputDueDateAddTaskOv', 'idSpanDueDate');
-      emptyRequiredShow('idSelectCategoryAddTaskOv', 'idSpanSelectCat');
-    }
-  });
- */
-/**
- * This function schows all fields which are required but empty
- * 
- * @param {string} InpElemId - element to check
- * @param {string} spanElemId - element to change
- */
-/* function emptyRequiredShow(InpElemId, spanElemId) {
-    if (document.getElementById(InpElemId).value == '') {
-        document.getElementById(spanElemId).classList.remove('d-none');
-    }
-} */

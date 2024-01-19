@@ -1,6 +1,8 @@
 const colors = ['#FF7A00', '#FF5EB3', '#6E52FF', '#9327FF', '#00BEE8', '#1FD7C1', '#FF745E', '#FFA35E', '#FC71FF', '#FFC701', '#0038FF', '#C3FF2B', '#FFE62B', '#FF4646', '#FFBB2B'];
 const alphabet = 'abcdefghijklmnopqrstuvwxyz'.split('');
 const contactsContainer = document.getElementById('contactsContainer');
+let markedContact = 0;
+let newContact = false;
 
 let contactJSONBE = [];
 
@@ -29,18 +31,14 @@ async function loadContacts() {
 async function createContactList() {
   await loadContacts();
   const contacts = contactJSONBE;
-
   for (const letter of alphabet) {
     const filteredContacts = contacts
       .filter(contact => contact.name.toLowerCase().startsWith(letter))
       .sort((a, b) => a.name.localeCompare(b.name));
-
     if (filteredContacts.length > 0) {
       const contactHTML = filteredContacts.map((contact, index) => {
-        const contactIndex = contacts.indexOf(contact);
-        return generateContactHTML(contact, contactIndex);
+        return generateContactHTML(contact, contacts.indexOf(contact));
       }).join('');
-
       const html = generateLetterSection(letter, contactHTML);
       contactsContainer.innerHTML += html;
     }
@@ -82,6 +80,7 @@ function closeOvelayAfterNewContact() {
  */
 function displayNewContact() {
   let display = contactJSONBE.length - 1;
+  newContact = true;
   showContactInfo(display);
 }
 
@@ -107,23 +106,14 @@ async function addContactViaEditOverlay(i) {
  * 
  */
 function getContactsValues(i) {
-  let name = document.getElementById('inputName').value;
-  let mail = document.getElementById('inputMail').value;
-  let phone = document.getElementById('inputTel').value;
-  let initial = name.split(' ').map(word => word.charAt(0).toUpperCase()).join('');
-  if (i) {
-    let bgColor = contactJSONBE[i].bgColor;
-    contactJSON1.bgColor = bgColor;
-   } else {
-    let bgColor = setColor()
-    contactJSON1.bgColor = bgColor;
-   }
-
-  contactJSON1.email = mail;
-  contactJSON1.initials = initial;
-  contactJSON1.name = name;
-  contactJSON1.phone = phone;
+  markedContact = i;
+  contactJSON1.bgColor = i ? contactJSONBE[i].bgColor : setColor();
+  contactJSON1.email = document.getElementById('inputMail').value;
+  contactJSON1.initials = memberInitials(document.getElementById('inputName').value);
+  contactJSON1.name = document.getElementById('inputName').value;
+  contactJSON1.phone = document.getElementById('inputTel').value;
 }
+
 
 
 /**
@@ -164,12 +154,14 @@ function showHideContactInfo(a, b, c, d, e, f) {
  * @param {number} i - index of the selected contact in the contacts JSON 
  */
 function showContactInfo(i) {
-  document.getElementById('ContactsInfoContainer').classList.remove('dd-none');
-
-  if (window.innerWidth < 750) {
-    showHideContactInfo('leftDiv', 'rightDiv', 'add', 'remove', 'dd-none', 'rightDivRes')
-  }
-
+  const markedContactElement = document.getElementById('idContact(' + markedContact + ')');
+  const currentContactElement = document.getElementById('idContact(' + i + ')');
+  const contactsInfoContainer = document.getElementById('ContactsInfoContainer');
+  if (markedContactElement) markedContactElement.classList.remove('contactMarked');
+  markedContact = i;
+  contactsInfoContainer.classList.remove('dd-none');
+  if (currentContactElement) currentContactElement.classList.add('contactMarked');
+  if (window.innerWidth < 750) showHideContactInfo('leftDiv', 'rightDiv', 'add', 'remove', 'dd-none', 'rightDivRes');
   setContactInfo(i);
   setEditDeleteDivDesktop(i);
 }
@@ -182,12 +174,10 @@ function showContactInfo(i) {
  */
 function setContactInfo(i) {
   const contactElements = getContactElements();
-
   contactElements.circle.innerHTML = contactJSONBE[i].initials;
   contactElements.circle.style.backgroundColor = contactJSONBE[i].bgColor;
   contactElements.name.innerHTML = contactJSONBE[i].name;
   contactElements.mail.innerHTML = contactJSONBE[i].email;
-
   if (contactJSONBE[i].phone == undefined) {
     contactElements.phone.innerHTML = 'Please edit phone number';
   } else {
@@ -202,7 +192,6 @@ function setContactInfo(i) {
  */
 function resetContactInfo() {
   const contactElements = getContactElements();
-
   contactElements.circle.innerHTML = '';
   contactElements.circle.style.backgroundColor = 'transparent';
   contactElements.name.innerHTML = '';
@@ -218,7 +207,6 @@ function resetContactInfo() {
  */
 function setEditDeleteDivDesktop(i) {
   document.getElementById('editDelteContactDektop').innerHTML = editDelteContactDektop(i);
-
   document.getElementById('editDeletOverlay').innerHTML = editDeletOverlay(i);
 }
 
@@ -241,18 +229,14 @@ function editContact(i) {
  */
 function setEditContactOverlay(i) {
   editContactOverlayTemplate(i);
-
   getAddEditContactElements();
-
   overlayHeader.innerHTML = 'Edit Contact';
   overlayHeaderText.classList.add('dd-none');
   overlayCircle.innerHTML = contactJSONBE[i].initials;
   overlayCircle.style.backgroundColor = contactJSONBE[i].bgColor;
-
   inputName.value = contactJSONBE[i].name;
   inputMail.value = contactJSONBE[i].email;
   inputTel.value = contactJSONBE[i].phone;
-
   overlayButtonDiv.innerHTML = overlayEditButtonDiv(i);
   document.getElementById('overlayButtonDiv').classList.add('JCspacebetween');
 }
@@ -264,18 +248,14 @@ function setEditContactOverlay(i) {
  */
 function setAddContactOVerlay() {
   addContactOverlayTemplate();
-
   getAddEditContactElements();
-
   overlayHeader.innerHTML = 'Add contact';
   overlayHeaderText.classList.remove('dd-none');
   overlayCircle.style.backgroundColor = '#d1d1d1';
   overlayCircle.innerHTML = '<img src="../assets/img/person_add_contact_overlay.svg">';
-
   inputName.value = '';
   inputMail.value = '';
   inputTel.value = '';
-
   overlayButtonDiv.innerHTML = overlayAddButtonDivTemplate();
 }
 
@@ -287,13 +267,13 @@ function setAddContactOVerlay() {
  */
 async function deleteContact(i) {
   contactJSONBE.splice(i, 1);
+  markedContact = 0;
   await setItem(KEY_for_JSON_CONTACS, contactJSONBE);
   hideContactInfoDektop();
   document.getElementById('contactsContainer').innerHTML = '';
   resetContactInfo();
   createContactList();
   closeAddContactOverlay()
-
   if (window.innerWidth < 750) {
     showHideContactInfo('leftDiv', 'rightDiv', 'remove', 'add', 'dd-none', 'rightDivRes')
   }
@@ -333,20 +313,28 @@ function closeAddContactOverlay() {
 
 /**
  * This function shows and hides the contact succesfully created overlay after 2 seconds
- * 
  */
 function showAndHideContactAddedOverlay() {
   setTimeout(function () {
-    showHideOverlay('show', 'hide', 'contactAddedOVerlay')
+    showHideOverlay('show', 'hide', 'contactAddedOVerlay');
   }, 300);
   setTimeout(function () {
-    showHideOverlay('hide', 'show', 'contactAddedOVerlay')
+    showHideOverlay('hide', 'show', 'contactAddedOVerlay');
+    markNewContact();
   }, 2000);
+
 }
 
 /**
+ * this function marks the new contact in list
+ */
+function markNewContact() {
+  let position = contactJSONBE.length - 1;
+  document.getElementById('idContact(' + position + ')').classList.add('contactMarked');
+  showContactInfo(position);
+}
+/**
  * This function shows and hides the overlays
- * 
  */
 function showHideOverlay(x, y, z) {
   document.getElementById(z).classList.add(x);

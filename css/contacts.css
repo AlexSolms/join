@@ -333,6 +333,10 @@
     background-color: #2A3647;
     color: white;
 }
+.contactMarked {
+    background-color: #2A3647;
+    color: white;
+}
 
 .contact {
     padding: 5px 0 5px 20px;

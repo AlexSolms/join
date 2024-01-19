@@ -1,6 +1,5 @@
 let users = [];
 
-
 /**
  *  animated logo in the desktop view
  */
@@ -12,7 +11,6 @@ function initAnimation() {
         animationImg.style.display = 'none';
     }, 2400);
 }
-
 
 /**
  *  animated logo in the mobile view
@@ -26,14 +24,12 @@ function initAnimationResponsiv() {
     }, 2400);
 }
 
-
 /**
  *  function releases the button when the checkbox is checked 
  */
 function toggleSignUpButton(checkbox) {
     const signUpButton = document.getElementById('signUpButton');
 }
-
 
 /**
  *  Handles the click event of the Sign Up button.
@@ -44,7 +40,6 @@ function handleSignUpButtonClick() {
     toggleSignUpButton(checkbox); 
     checkbox.checked = false; 
 }
-
 
 /**
  *  functions to open other html pages 
@@ -82,7 +77,6 @@ function redirectToLoginPage() {
     }, 1500);
 }
 
-
 /**
  *  Downloads the users array from the backend.
  */
@@ -93,7 +87,6 @@ async function loadUsers() {
         console.error("Loading error:", e);
     }
 }
-
 
 /**
  * Displays a message in the specified message container and hides it after a delay.
@@ -114,7 +107,6 @@ function displayAndHideMessage(messageContainer, desktopMessage, mobileMessage) 
     }, 1500);
 }
 
-
 /**
  * Handles the case where the user's name is missing. 
  */
@@ -125,7 +117,6 @@ function handleMissingName() {
     displayAndHideMessage(message, desktopMessage, mobileMessage);
 }
 
-
 /**
  * Handles the case where the user's password does not match.
  */
@@ -135,7 +126,6 @@ function handlePasswordMismatch() {
     const mobileMessage = passwordNotMatchMobile();
     displayAndHideMessage(message, desktopMessage, mobileMessage);
 }
-
 
 /**
  * Handles the case where the user already exists.
@@ -150,7 +140,6 @@ function handleExistingUser() {
     }, 1500);
 }
 
-
 /**
  * Handles the case where the checkbox is not checked.
  */
@@ -160,8 +149,6 @@ function handleCheckboxNotChecked() {
     const mobileMessage = privacyPolicyCheckboxMobile();
     displayAndHideMessage(message, desktopMessage, mobileMessage);
 }
-
-
 
 /**
  * Handles the response from the server.
@@ -184,7 +171,6 @@ function handleResponse(response) {
     displayAndHideMessage(message, desktopMessage, mobileMessage);
 }
 
-
 /**
  * Handles the success response by setting desktop and mobile messages,
  * and redirecting to the login page after a delay.
@@ -197,7 +183,6 @@ function handleSuccessResponse(response) {
     redirectToLoginPage();
 }
 
-
 /**
  * Handles the failure response by setting desktop and mobile messages.
  */
@@ -206,7 +191,6 @@ function handleFailureResponse() {
     const mobileMessage = generateHTMLifNotUserMobile();
     displayAndHideMessage(message, desktopMessage, mobileMessage);
 }
-
 
 /**
  * Main function to add a new user.
@@ -234,7 +218,6 @@ async function addUser() {
     addNewUser(fullName, email, password);
 }
 
-
 /**
  * Validates the full name.
  * @param {string} fullName - The full name to validate.
@@ -248,7 +231,6 @@ function validateFullName(fullName) {
     }
     return true;
 }
-
 
 /**
  * Validates whether the passwords match.
@@ -264,7 +246,6 @@ function validatePasswordMatch(password, confirmPassword) {
     return true;
 }
 
-
 /**
  * Checks if the user already exists.
  * @param {string} email - The email to check.
@@ -278,7 +259,6 @@ function checkExistingUser(email) {
     }
     return false;
 }
-
 
 /**
  * Adds a new user.
@@ -296,7 +276,6 @@ async function addNewUser(fullName, email, password) {
     }
 }
 
-
 /**
  * This function clears the registration form fields
  */
@@ -306,7 +285,6 @@ function clearRegistrationForm() {
     document.getElementById('newPassword').value = '';
     document.getElementById('confirmPassword').value = '';
 }
-
 
 /**
  * This function sets a new user with the given details and adds initial to the user object
@@ -324,11 +302,9 @@ function setNewUser(fullName, email, password,) {
         password: password,
         initials: userInitials,
     });
-    //debugger; //added by Alex
     saveNewUserInContacts(email);
 }
 
-// added by Alex
 /**
  * This function checkes the contact JASON if the new user exist, if not new user will added
  * 
@@ -342,11 +318,9 @@ async function saveNewUserInContacts(email) {
     if(existingUser === false){
         let contact = {"email": users[NR].email, "initials": users[NR].initials, "name": users[NR].name, "bgColor": COLORS[randomColorIndex]}
         contactJSON.push(contact);
-        //debugger;
         setItem(KEY_for_JSON_CONTACS, contactJSON);
     }
 }
-
 
 /**
  * Check if user is already exist, if yes, forward to summary.html
@@ -365,7 +339,6 @@ async function login() {
     }
 }
 
-
 /**
  * Finds a user by email and password in the users array.
  * @param {string} email - The user's email.
@@ -375,7 +348,6 @@ async function login() {
 function findUserByEmailAndPassword(email, password) {
     return users.find(c => c.email === email && c.password === password);
 }
-
 
 /**
  * Displays appropriate user messages or redirects based on user existence.
@@ -392,7 +364,6 @@ function displayUserMessageOrRedirect(user) {
     }
 }
 
-
 /**
  * Displays a message for user not found scenario.
  */
@@ -405,7 +376,6 @@ function displayUserNotFoundMessage() {
     document.getElementById('headerRightResponsiv').style.display = 'none';
     messageResponsiv.innerHTML = generateHTMLifNotUserMobile();
 }
-
 
 /**
  * Resets the input fields after login attempt.

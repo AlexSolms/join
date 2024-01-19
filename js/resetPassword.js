@@ -189,5 +189,3 @@ function displaySuccessMessageAndRedirect(successMessage, messageElement, messag
         window.location.href = '../html/login.html';
     }, 1500);
 }
-
-

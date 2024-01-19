@@ -201,7 +201,6 @@ function privacyPolicyCheckboxDesktop() {
         </div>`;
 }
 
-
 /**
  * This function generates HTML for mobile view if pravacy policy is not accept
  */

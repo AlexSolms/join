@@ -56,7 +56,7 @@ function taskTemplate(taskNr) {
 }
 
 /**
- * 
+ * this function stets the option dropwn for changing the status
  * @param {string} taskStatus provides the actual status of task
  * @param {string} taskNr - used to find the specific element id
  */

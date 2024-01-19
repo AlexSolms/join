@@ -28,7 +28,11 @@ function greetingText() {
     }
 }
 
-function activeUser(params) {
+/**
+ * this function returns activ user name
+ * @returns - activ user name
+ */
+function activeUser() {
     const currentUser = JSON.parse(localStorage.getItem('currentUser'));
     let activeUserName = currentUser ? currentUser.name : '';   
     return activeUserName;
@@ -73,7 +77,6 @@ async function addValuesToSummary() {
     taskJson = await loadJSON(KEY_for_JSON_TASKS);
     addNumToSummary(); 
     upcommingDeadline();  
-    
 }
 
 /**

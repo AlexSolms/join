@@ -44,13 +44,11 @@ function singleTaskOvHtmlTemp(taskNr) {
                 <div id="idAssingedToContainer">
                     <span id="idAssingedTo" class="taskOvSectionHeadline">Assinged To:</span>
                     <div id="idSingleTaskMemberContainerOV" class="singleTaskMemberContainerOV">
-                        <!-- extra function taskOverlayMember(activeTask) for adding Members-->
                     </div>
                 </div>
                 <div id="idSubTaskContainerOv">
                     <span id="idSubTaskOv" class="taskOvSectionHeadline">Subtasks:</span>
                     <div id="idSubTaskSubContainerOv" class="singleTaskSubTaskContainerOV">
-                        <!-- extra function taskOverlaySubTasks(activeTask) for adding subtasks-->
                     </div>
                 </div>
                 <div id="idBottomAreaOv" class="d-flex justify-content-end">
@@ -261,7 +259,7 @@ function deleteTaskCancel(taskNr) {
 }
 
 /**
- * 
+ * this funktion changes the progress bar for solved subtasks
  * @param {number} taskNr - number of open task
  */
 async function checkUncheckSubtask(taskNr) {

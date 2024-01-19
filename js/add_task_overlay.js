@@ -6,6 +6,7 @@ let activTaskNumber = '';
 let task2 = {};
 let taskStatus = 'toDo';
 let activeDesk;
+let desk = '';
 
 /**
  * THis function resets the task object
@@ -297,21 +298,29 @@ function openOrCloseAddTaskOv(elementID) {
 
 /**
  * This function assing the correct AssingTo Element
- * @param {number} overlay 
+ * @param {Boolean} overlay true if overlay
  */
 async function loadContatsToAssinged(overlay) {
-    let element = document.getElementById('idInputAssignedToContainerDesktopAddTaskOv');
-    let computedStyles = window.getComputedStyle(element).display;
-    let desk = '';
-    if (overlay) {
-        desk = computedStyles === 'flex' ? 'DeskOv' : 'Ov';
-    } else {
-        desk = computedStyles === 'flex' ? 'Desk' : '';
-        resetTask2();
-    }
+    desk = getEnding(overlay);
     await loadContacts(desk);
     document.getElementById('idChkSelectMultUserOuterCon' + desk).classList.add('d-none');
     document.getElementById('idInputDueDateAddTaskOv').min = new Date().toISOString().split('T')[0];
+}
+
+/**
+ * this function returns ending for identification of the correct AssingedTo container
+ * @param {Boolean} overlay true if overlay
+ * @returns - ending for identification of the correct AssingedTo container
+ */
+function getEnding(overlay) {
+    let element = document.getElementById('idInputAssignedToContainerDesktopAddTaskOv');
+    let computedStyles = window.getComputedStyle(element).display;
+    if (overlay) {
+        return computedStyles === 'flex' ? 'DeskOv' : 'Ov';
+    } else {
+        resetTask2();
+        return computedStyles === 'flex' ? 'Desk' : '';
+    }
 }
 
 /**
@@ -353,7 +362,7 @@ function taskOverlayMemberDiskContainer() {
             memberHTML += taskOverlayMemberDiskHTML(memberColor, contactMember.initials, i);
         }
     }
-    if(task2.member.length > 3)memberHTML += additionalMember(task2.member.length - 3);
+    if (task2.member.length > 3) memberHTML += additionalMember(task2.member.length - 3);
     return memberHTML
 }
 
@@ -369,7 +378,7 @@ function callAddContact() {
  */
 function resetfields() {
     clearAddTaskForm();
-    document.getElementById('idSelectedUserAddTaskDesk').innerText = "";
+    document.getElementById('idSelectedUserAddTask' + desk).innerText = "";
     for (let i = 0; i < task2.member.length; i++) {
         document.getElementById('idAssingedToCon' + i).classList.remove('AssingedToChecked');
         document.getElementById('idAssingedToChk' + i).classList.add('check_box', 'chkHeight');

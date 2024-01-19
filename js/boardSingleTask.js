@@ -26,7 +26,6 @@ function taskTemplate(taskNr) {
         <div class="d-flex justify-content-between align-item-center">
             <div id="idTaskType${taskNr}" class="singlTaskType">User Story </div>
             <select id="idChangeStatus${taskNr}" onclick="innerClick(event)" onchange="changeStatus(this)" class="changeStatus">
-             <!-- hier kommt das dropdownelement rein -->
              </select> 
         </div>
         <div id="idTaskTxts${taskNr}" class="singelTaskTexts">
@@ -48,7 +47,6 @@ function taskTemplate(taskNr) {
         </div>
         <div id="idSingleTaskMemberPrio${taskNr}" class="SingleTaskMemberPrio">
             <div id="idSingleTaskMember${taskNr}" class="SingleTaskMember">
-                <!-- hier müssen dann über eine Funktion die Memberplaketten eingefügt werden -->
             </div>
             <div id="idSingleTaskPrio${taskNr}" class="SingleTaskPrio">
                 <img id="idSingleTaskPrioImg${taskNr}" src="../assets/img/prio_urgent.svg" alt="">
@@ -141,8 +139,7 @@ function subTaskBarProgress(doneSubTasks, subTaskTotal, taskNr) {
     document.getElementById('idSingleTaksCountTotal' + taskNr).innerText = subTaskTotal;
     if (subTaskTotal != 0) {
         faktor = doneSubTasks / subTaskTotal;
-        document.getElementById('idSingleTaskSubProgress' + taskNr).style.width = Math.round(128 * faktor) + 'px';
-        
+        document.getElementById('idSingleTaskSubProgress' + taskNr).style.width = Math.round(128 * faktor) + 'px';   
     } else {
         document.getElementById('idSingleTaskSubProgress' + taskNr).style.width = 0;
     }
@@ -156,15 +153,17 @@ function subTaskBarProgress(doneSubTasks, subTaskTotal, taskNr) {
  * @param {string} taskNr - used to find the specific element id
  */
 function taskMember(arrMember, taskNr) {
+    let tskMem = document.getElementById('idSingleTaskMember' + taskNr);
     for (let i = 0; i < arrMember.length; i++) {
         const member = contactJSON.find(contact => contact.name === arrMember[i]);
-        if (member) {
+        if (member && i < 3) {
             const membInitials = member.initials;
             const memberColor = member.bgColor.slice(1);
             const memberSingleTask = `<div id="idMemberSingleTask${taskNr}_${i}" class="memberDisk memberBgColor${memberColor}">${membInitials}</div>`;
-            document.getElementById('idSingleTaskMember' + taskNr).innerHTML += memberSingleTask;
+            tskMem.innerHTML += memberSingleTask;
         }
     }
+    if(arrMember.length > 3)tskMem.innerHTML += `<div id="idTaskMemberInitialsOv3" class="memberDisk memberAdditionals">+${arrMember.length - 3}</div>`;
 }
 
 /**

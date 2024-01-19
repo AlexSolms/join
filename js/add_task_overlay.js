@@ -348,27 +348,13 @@ function taskOverlayMemberDiskContainer() {
     let memberHTML = '';
     for (let i = 0; i < task2.member.length; i++) {
         const contactMember = contactJSON.find(contact => contact.name === task2.member[i]);
-        if (contactMember) {
+        if (contactMember && i < 3) {
             const memberColor = contactMember.bgColor.slice(1);
             memberHTML += taskOverlayMemberDiskHTML(memberColor, contactMember.initials, i);
         }
     }
+    if(task2.member.length > 3)memberHTML += additionalMember(task2.member.length - 3);
     return memberHTML
-}
-
-/**
- * this function returns the HTML code for a single member of this task
- * 
- * @param {string} memberColor - background color for disk of member
- * @param {string} memberinitials - intitials of member
- * @param {number} i - count of loop
- * @returns - HTML for single member of this task
- */
-function taskOverlayMemberDiskHTML(memberColor, memberinitials, i) {
-    return /*html*/ `
-    <div id="idTaskMemberSubContainerOV${i}" class="singleTaskMemberSubContainerOV px-1">
-        <div id="idTaskMemberInitialsOv${i}" class="memberDiskOv memberBgColor${memberColor}">${memberinitials}</div>
-    </div>`
 }
 
 /**

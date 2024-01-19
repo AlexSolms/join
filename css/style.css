@@ -79,8 +79,6 @@ button:hover{
     filter: invert(53%) sepia(99%) saturate(681%) hue-rotate(165deg) brightness(93%) contrast(89%);
 }
 
-
-
 .memberBgColorFF7A00{background-color: #FF7A00;}
 .memberBgColorFF5EB3{background-color: #FF5EB3;}
 .memberBgColor6E52FF{background-color: #6E52FF;}
@@ -96,6 +94,13 @@ button:hover{
 .memberBgColorFFE62B{background-color: #FFE62B;}
 .memberBgColorFF4646{background-color: #FF4646;}
 .memberBgColorFFBB2B{background-color: #FFBB2B;}
+
+.memberAdditionals{
+    background-color: #2A3647;
+    color: white;
+    font-size: 12px;
+    font-weight: 400;
+}
 
 .memberDiskOv {
     display: flex;

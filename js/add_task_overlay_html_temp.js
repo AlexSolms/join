@@ -180,3 +180,27 @@ function subtaskHTML(count) {
     </li>`
 }
 
+/**
+ * this function returns the HTML code for a single member of this task
+ * @param {string} memberColor - background color for disk of member
+ * @param {string} memberinitials - intitials of member
+ * @param {number} i - count of loop
+ * @returns - HTML for single member of this task
+ */
+function taskOverlayMemberDiskHTML(memberColor, memberinitials, i) {
+    return /*html*/ `
+    <div id="idTaskMemberSubContainerOV${i}" class="singleTaskMemberSubContainerOV px-1">
+        <div id="idTaskMemberInitialsOv${i}" class="memberDiskOv memberBgColor${memberColor}">${memberinitials}</div>
+    </div>`
+}
+
+/**
+ * 
+ * @param {Number} membNr - count of additional Members
+ */
+function additionalMember(membNr, singleTask) {
+    return /*html*/ `
+    <div id="idTaskMemberSubContainerOV3" class="singleTaskMemberSubContainerOV px-1 ">
+        <div id="idTaskMemberInitialsOv3" class="memberDiskOv memberAdditionals">+${membNr}</div>
+    </div>`
+} 

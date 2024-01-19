@@ -110,7 +110,7 @@ function changeStatus(task) {
 }
 
 /**
- * Tih is the search and render function for the tasks. It call the search function and renders the result
+ * This is the search and render function for the tasks. It call the search function and renders the result
  */
 function searchTask() {
     let search = document.getElementById('idBoardSearch').value;
@@ -136,6 +136,9 @@ function searchFunction(search) {
     renderAllContainer(searchTaskObj);
 }
 
+/**
+ * this function sets the width for this element
+ */
 function openNav() {
     document.getElementById("idBgAddTaskOverlay").style.width = "100%";
   }

@@ -127,7 +127,7 @@ function searchFunction(search) {
     searchTaskObj = [];
     let searchIndex = 0;
     for (let i = 0; i < taskJson.length; i++) {
-        if (taskJson[i].headline.toLowerCase().includes(search)) {
+        if (taskJson[i].headline.toLowerCase().includes(search) || taskJson[i].description.toLowerCase().includes(search)) {
             searchTaskObj[searchIndex] = taskJson[i];
             searchIndex++;
         }

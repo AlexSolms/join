@@ -237,6 +237,10 @@ function showUserNames(desk) {
     }
 }
 
+/**
+ * this function opens or closes the assinged member menu
+ * @param {String} desk - for selevting the correct id
+ */
 function toggleAssignedToDorpdown(desk) {
     toggleDivUsrDropVsMemberDisk(desk);
     if(expanded)document.getElementById('idSelectedUserAddTask' + desk).innerHTML = taskOverlayMemberDiskContainer();
@@ -247,7 +251,7 @@ document.getElementById('idBackgroundContainer').addEventListener('click', handl
 document.addEventListener('DOMContentLoaded', function () {
     let addTaskForm = document.getElementById('idAddTaskForm');
     if (addTaskForm) addTaskForm.addEventListener('click', handleClickEvent);
-    else console.log("Element mit der ID 'idAddTaskForm' wurde nicht gefunden."); // ich vermeide hier zwar den Fehler, aber gleichzeitig wird halt der Eventhandler nicht mehr getriggert wenn ich add Task klicke
+    //else console.log("Element mit der ID 'idAddTaskForm' wurde nicht gefunden."); 
 });
 
 function handleClickEvent(event) {
@@ -257,22 +261,20 @@ function handleClickEvent(event) {
         if (addTaskcontainer == 'big') container = document.getElementById('idInputAssignedToContainerDesktopAddTaskOv');
         else container = document.getElementById('idInputAssignedToContainerAddTaskOv');
 
-        if (container.contains(textElement)) {
-            console.log('Das angeklickte Element befindet sich im Container idContentContainerAddTaskOv.');
-        } else {
-            console.log('Das angeklickte Element befindet sich außerhalb des Containers.');
+        if (!container.contains(event.target)) {
             toggleAssignedToDorpdown(activeDesk);
-            // Hier kannst du je nach Bedarf verschiedene Aktionen ausführen
-            if (event.currentTarget.id === 'idBackgroundContainer') {
-                document.getElementById('idChkSelectMultUserOuterCon').classList.add('d-none');
-            }
         }
+            //console.log('Das angeklickte Element befindet sich im Container idContentContainerAddTaskOv.');
+      //  } else {
+            //console.log('Das angeklickte Element befindet sich außerhalb des Containers.');
+            
+            // Hier kannst du je nach Bedarf verschiedene Aktionen ausführen
+            /* if (event.currentTarget.id === 'idBackgroundContainer') {
+                document.getElementById('idChkSelectMultUserOuterCon').classList.add('d-none');
+            } */
+        
     }
 }
-
-
-
-
 
 /**
  * this function is for showing selected members as disc below toe correct assingedTo element
@@ -285,7 +287,6 @@ function toggleDivUsrDropVsMemberDisk(desk) {
     memberDisks.classList.toggle('d-none');
     checkboxes.classList.toggle('d-none');
 }
-
 
 /**
  * This function recaluclates all task ids and retrun a task id for the new added task
@@ -316,14 +317,15 @@ async function openAddtaskOverlay(taskStat) {
     htmlAddTaskOverlay();
     taskStatus = taskStat;
     await loadContatsToAssinged(true);
-    document.getElementById("idBgAddTaskOverlay").classList.toggle('bgAddTaskOvSlide');
+    openOrCloseAddTaskOv("idBgAddTaskOverlay"); 
+    //document.getElementById("idBgAddTaskOverlay").classList.toggle('bgAddTaskOvSlide');
 }
 
 /**
  * this function closes the add task overlay
  */
-function closeAddTaskOv() {
-    document.getElementById("idBgAddTaskOverlay").classList.toggle('bgAddTaskOvSlide');
+function openOrCloseAddTaskOv(elementID) {
+    document.getElementById(elementID).classList.toggle('bgAddTaskOvSlide');
 }
 
 /**

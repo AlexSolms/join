@@ -1,8 +1,6 @@
 .singleTaskContainer {
     width: 252px;
-    /* hier muss ich noch schaun, dass die Breite passt wegen dem Schatten */
     height: 263px;
-    /* das hier muss auf auto später */
     box-shadow: 0px 0px 10px 3px #00000014;
     padding: 16px;
     border-radius: 24px;
@@ -132,3 +130,12 @@
     width: 30px;
     margin-left: -6px;
 }
+
+/* clears the ‘X’ from Internet Explorer */
+.hideSearchX::-ms-clear { display: none; width : 0; height: 0; }
+.hideSearchX::-ms-reveal { display: none; width : 0; height: 0; }
+/* clears the ‘X’ from Chrome */
+.hideSearchX::-webkit-search-decoration,
+.hideSearchX::-webkit-search-cancel-button,
+.hideSearchX::-webkit-search-results-button,
+.hideSearchX::-webkit-search-results-decoration { display: none; }

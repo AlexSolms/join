@@ -47,9 +47,9 @@ function htmlAddTaskOverlay() {
                                     <span for="idUrgentIMGAddTaskOv">Urgent</span>
                                     <img id="idurgentIMGAddTaskOv" src="../assets/img/prio_urgent.svg" class="">
                                 </div>
-                                <div id="idmediumContainerAddTaskOv" onclick="highlight('medium')" class="medium prioContainerAddTaskOv">
+                                <div id="idmediumContainerAddTaskOv" onclick="highlight('medium')" class="prioContainerAddTaskOv medium">
                                     <span for="idMediumIMGAddTaskOv">Medium</span>
-                                    <img id="idmediumIMGAddTaskOv" src="../assets/img/prio_medium.svg" class="">
+                                    <img id="idmediumIMGAddTaskOv" src="../assets/img/prio_medium_white.svg" class="">
                                 </div>
                                 <div id="idlowContainerAddTaskOv" onclick="highlight('low')" class="prioContainerAddTaskOv">
                                     <span for="idLowIMGAddTaskOv">Low</span>
@@ -107,7 +107,8 @@ function htmlAddTaskOverlay() {
                 </div>
             </div>
             <div id="idSubmitContainerAddTaskOv" onsubmit="storeNewTask(true)"
-                class="submitContainerAddTaskOv d-flex justify-content-end align-items-center">
+                class="submitContainerAddTaskOv d-flex justify-content-end align-items-center gap-2">
+                <button class="taskButton" type="reset" onclick="resetfields()">clear</button>
                 <button id="idSubmitButtonAddTaskOv" type="submit" class="taskButton">Create Task <img
                         src="../assets/img/check.svg"></button>
             </div>
@@ -146,7 +147,7 @@ function userOvHTML(memberName, memberColor, memberinitials, i) {
         </div>
         <span id="idAssingedToName${i}" class="assignToName">${memberName}</span>
         <div class="chkContainerAssingdTo">
-            <input id=idAssingedToChk${i} type="checkbox" class="check_box chkHeight">
+            <input id=idAssingedToChk${i} type="checkbox" disabled class="check_box chkHeight">
             <label for=idAssingedToChk${i}></label>
         </div>
     </div>`

@@ -66,6 +66,7 @@ function toggleDefaultContainer(taskContainerId, taskCount) {
 function dragStart(taskNummer) {
     taskToMove = taskNummer;
 }
+
 /**
  * This function prevents the standard behavior for event dragover
  * 

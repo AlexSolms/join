@@ -1,7 +1,6 @@
 let expanded = false;
 let addTaskcontainer = 'empty';
 let subtaskPlus = true;
-//let currentPrio = '';
 let subtaskObj = [];
 let activTaskNumber = '';
 let task2 = {};
@@ -42,7 +41,7 @@ function highlight(prio) {
 }
 
 /**
- * Thsi function remove the color of all priority elements
+ * This function remove the color of all priority elements
  */
 function removeHighlight() {
     const PRIO = ['low', 'medium', 'urgent']
@@ -55,7 +54,6 @@ function removeHighlight() {
 
 /**
  * This function is for swap of icons
- * 
  * @param {number} count - for unique identifier
  */
 function switchIons(count) {
@@ -87,7 +85,6 @@ function addSubtask() {
 
 /**
  * This function delets the selected subtask
- * 
  * @param {object} subtaskObjElement 
  */
 function deleteSubtask(subtaskObjElement) {
@@ -97,7 +94,6 @@ function deleteSubtask(subtaskObjElement) {
 
 /**
  * This function is for the edditing of the subtask
- * 
  * @param {number} count 
  */
 function editSubtask(count) {
@@ -109,7 +105,6 @@ function editSubtask(count) {
 
 /**
  * This function saves the subtask into the subtask array and call the subTask function
- * 
  * @param {number} count - for unique identifier
  */
 function editSubtaskText(count) {
@@ -119,7 +114,6 @@ function editSubtaskText(count) {
 
 /**
  * this function stores the new or edited task in backend
- * 
  * @param {boolean} overlay - true or false to get the information if it was called from overlay or from add_task page
  */
 async function storeNewTask(overlay) {
@@ -139,7 +133,6 @@ async function storeNewTask(overlay) {
 
 /**
  * This function shows a popup
- * 
  * @param {string} element - elementid
  */
 function showPopup(element) {
@@ -149,7 +142,6 @@ function showPopup(element) {
 
 /**
  * This function hides the popup
- * 
  * @param {string} element - elementid 
  */
 function hidePopup(element) {
@@ -158,7 +150,6 @@ function hidePopup(element) {
 
 /**
  * This function redirects to the "board.html" page. 
- * 
  * @param {string} element - elementid 
  */
 function openBoardPage(element) {
@@ -202,7 +193,6 @@ function getSubtaskFromForm() {
 
 /**
  * This function loads the contacts from backend into the correct assingedTo element
- * 
  * @param {string} desk - to assing the correct element
  */
 async function loadContacts(desk) {
@@ -216,23 +206,16 @@ async function loadContacts(desk) {
 
 /**
  * This function is for showing the contactlist
- * 
  * @param {string} desk for identifying the correct assingedTo element
  */
 function showUserNames(desk) {
     activeDesk = desk;
     if (!expanded) {
         toggleAssignedToDorpdown(desk);
-        //toggleDivUsrDropVsMemberDisk(desk);
-       // expanded = true;
-       document.getElementById('idAddTaskForm').addEventListener('click', handleClickEvent);
+        document.getElementById('idAddTaskForm').addEventListener('click', handleClickEvent);
         desk == '' || desk == 'Ov' ? addTaskcontainer = 'small' : addTaskcontainer = 'big';
-        console.log('addTaskcontainer: ', addTaskcontainer);
     } else {
         toggleAssignedToDorpdown(desk);
-        //toggleDivUsrDropVsMemberDisk(desk);
-        //document.getElementById('idSelectedUserAddTask' + desk).innerHTML = taskOverlayMemberDiskContainer();
-       // expanded = false;
         addTaskcontainer = 'empty';
     }
 }
@@ -243,42 +226,28 @@ function showUserNames(desk) {
  */
 function toggleAssignedToDorpdown(desk) {
     toggleDivUsrDropVsMemberDisk(desk);
-    if(expanded)document.getElementById('idSelectedUserAddTask' + desk).innerHTML = taskOverlayMemberDiskContainer();
+    if (expanded) document.getElementById('idSelectedUserAddTask' + desk).innerHTML = taskOverlayMemberDiskContainer();
     expanded = !expanded;
 }
 
+/* Event Handler, used to call function handleClickEvent()*/
 document.getElementById('idBackgroundContainer').addEventListener('click', handleClickEvent);
 document.addEventListener('DOMContentLoaded', function () {
-    let addTaskForm = document.getElementById('idAddTaskForm');
-    if (addTaskForm) addTaskForm.addEventListener('click', handleClickEvent);
-    //else console.log("Element mit der ID 'idAddTaskForm' wurde nicht gefunden."); 
+    if (document.getElementById('idAddTaskForm')) document.getElementById('idAddTaskForm').addEventListener('click', handleClickEvent);
 });
 
+/**
+ * this function closes the assigned to drop down
+ * @param {Event} event - the event
+ */
 function handleClickEvent(event) {
-    let textElement = event.target;
-    let container;
-    if (expanded) {
-        if (addTaskcontainer == 'big') container = document.getElementById('idInputAssignedToContainerDesktopAddTaskOv');
-        else container = document.getElementById('idInputAssignedToContainerAddTaskOv');
-
-        if (!container.contains(event.target)) {
-            toggleAssignedToDorpdown(activeDesk);
-        }
-            //console.log('Das angeklickte Element befindet sich im Container idContentContainerAddTaskOv.');
-      //  } else {
-            //console.log('Das angeklickte Element befindet sich außerhalb des Containers.');
-            
-            // Hier kannst du je nach Bedarf verschiedene Aktionen ausführen
-            /* if (event.currentTarget.id === 'idBackgroundContainer') {
-                document.getElementById('idChkSelectMultUserOuterCon').classList.add('d-none');
-            } */
-        
-    }
+    let elementID = (addTaskcontainer == 'big') ? 'idInputAssignedToContainerDesktopAddTaskOv' : 'idInputAssignedToContainerAddTaskOv';
+    let container = document.getElementById(elementID);
+    if (expanded && !container.contains(event.target)) toggleAssignedToDorpdown(activeDesk);
 }
 
 /**
  * this function is for showing selected members as disc below toe correct assingedTo element
- * 
  * @param {string} desk - for identifying the correct assingedTo element
  */
 function toggleDivUsrDropVsMemberDisk(desk) {
@@ -290,7 +259,6 @@ function toggleDivUsrDropVsMemberDisk(desk) {
 
 /**
  * This function recaluclates all task ids and retrun a task id for the new added task
- * 
  * @returns 
  */
 function calcTaskId() {
@@ -317,8 +285,7 @@ async function openAddtaskOverlay(taskStat) {
     htmlAddTaskOverlay();
     taskStatus = taskStat;
     await loadContatsToAssinged(true);
-    openOrCloseAddTaskOv("idBgAddTaskOverlay"); 
-    //document.getElementById("idBgAddTaskOverlay").classList.toggle('bgAddTaskOvSlide');
+    openOrCloseAddTaskOv("idBgAddTaskOverlay");
 }
 
 /**
@@ -330,7 +297,6 @@ function openOrCloseAddTaskOv(elementID) {
 
 /**
  * This function assing the correct AssingTo Element
- * 
  * @param {number} overlay 
  */
 async function loadContatsToAssinged(overlay) {
@@ -350,7 +316,6 @@ async function loadContatsToAssinged(overlay) {
 
 /**
  * This function sets the checked attribute for the assigned to checkboxes
- * 
  * @param {number} chkNr - id of checkbox
  */
 function toggleChkBox(chkNr) {
@@ -368,7 +333,6 @@ function toggleChkBox(chkNr) {
 
 /**
  * THis function sets and removs the background color of seleted assingTo member
- * 
  * @param {number} chkNr - for identifying of correct Checkbox
  */
 function toggleselectedAssignTo(chkNr) {
@@ -378,7 +342,6 @@ function toggleselectedAssignTo(chkNr) {
 
 /**
  * this function returns the complete HTML code for all members of this task
- * 
  * @returns - HTML Code for all member of task
  */
 function taskOverlayMemberDiskContainer() {
@@ -409,9 +372,21 @@ function taskOverlayMemberDiskHTML(memberColor, memberinitials, i) {
 }
 
 /**
- * THis function opens the contact page
+ * This function opens the contact page
  */
 function callAddContact() {
     window.location.href = "../html/contacts.html";
 }
 
+/**
+ * this funkction clears all subtasks and all checked Members
+ */
+function resetfields() {
+    clearAddTaskForm();
+    document.getElementById('idSelectedUserAddTaskDesk').innerText = "";
+    for (let i = 0; i < task2.member.length; i++) {
+        document.getElementById('idAssingedToCon' + i).classList.remove('AssingedToChecked');
+        document.getElementById('idAssingedToChk' + i).classList.add('check_box', 'chkHeight');
+        document.getElementById('idAssingedToChk' + i).classList.remove('check_box_checked');
+    }
+}

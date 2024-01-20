@@ -97,14 +97,10 @@ function addNumToSummary() {
  * 
  */
 function upcommingDeadline() {
-    let youngestDate = new Date(taskJson[0].dueDate);
-    for (let i = 1; i < taskJson.length; i++) {
-        let taskDate = new Date(taskJson[i].dueDate);
-        if (taskDate < youngestDate) {
-            youngestDate = taskDate;
-        }
-    }
-    document.getElementById('idTaksUrgentDate').innerHTML = `<strong>${buildDateFormat(youngestDate)}</strong>`;
+    const filterUrgentTasks = taskJson.filter((task) => task.urgency === 'urgent');
+    const sortedTask = filterUrgentTasks.sort(function(a,b){ return a.dueDate - b.dueDate;});
+    let urgendDate = (sortedTask.length === 0) ? 'no urgent task' : buildDateFormat(new Date(sortedTask[0].dueDate));
+    document.getElementById('idTaksUrgentDate').innerHTML = `<strong>${urgendDate}</strong>`;   
 }
 
 /**

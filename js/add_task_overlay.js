@@ -384,4 +384,6 @@ function resetfields() {
         document.getElementById('idAssingedToChk' + i).classList.add('check_box', 'chkHeight');
         document.getElementById('idAssingedToChk' + i).classList.remove('check_box_checked');
     }
+    document.getElementById('idmediumContainerAddTaskOv').classList.add('medium')
+    document.getElementById('idmediumIMGAddTaskOv').src = `../assets/img/prio_medium_white.svg`
 }

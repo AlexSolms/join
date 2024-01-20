@@ -37,8 +37,8 @@ function toggleSignUpButton(checkbox) {
  */
 function handleSignUpButtonClick() {
     const checkbox = document.getElementById('signUpCheckbox');
-    toggleSignUpButton(checkbox); 
-    checkbox.checked = false; 
+    toggleSignUpButton(checkbox);
+    checkbox.checked = false;
 }
 
 /**
@@ -66,7 +66,7 @@ function redirectToSummaryPage() {
 
 function goBack() {
     window.history.back();
-  }
+}
 
 /**
  * Redirects to the login page after a delay.
@@ -82,7 +82,7 @@ function redirectToLoginPage() {
  */
 async function loadUsers() {
     try {
-        users = await loadJSON(KEY_for_JSON_PW); 
+        users = await loadJSON(KEY_for_JSON_PW);
     } catch (e) {
         console.error("Loading error:", e);
     }
@@ -136,7 +136,7 @@ function handleExistingUser() {
     const mobileMessage = handleExistingUserMobile();
     displayAndHideMessage(message, desktopMessage, mobileMessage);
     setTimeout(() => {
-        window.location.href = "../html/login.html"; 
+        window.location.href = "../html/login.html";
     }, 1500);
 }
 
@@ -200,21 +200,13 @@ async function addUser() {
     const email = document.getElementById('signUpEmail').value;
     const password = document.getElementById('newPassword').value;
     const confirmPassword = document.getElementById('confirmPassword').value;
-    if (!validateFullName(fullName)) {
-        return;
-    }
-    if (!validatePasswordMatch(password, confirmPassword)) {
-        return;
-    }
-    const checkbox = document.getElementById('signUpCheckbox');
-    if (!checkbox.checked) {
+    if (!validateFullName(fullName) || !password || !validatePasswordMatch(password, confirmPassword)|| !email) return;
+    if (!document.getElementById('signUpCheckbox').checked) {
         handleCheckboxNotChecked();
         return;
     }
     await loadUsers();
-    if (checkExistingUser(email)) {
-        return;
-    }
+    if (checkExistingUser(email)) return;
     addNewUser(fullName, email, password);
 }
 
@@ -269,7 +261,7 @@ function checkExistingUser(email) {
 async function addNewUser(fullName, email, password) {
     setNewUser(fullName, email, password);
     try {
-        const response = await setItem(KEY_for_JSON_PW, users); 
+        const response = await setItem(KEY_for_JSON_PW, users);
         handleResponse(response);
     } catch (error) {
         console.error(error);
@@ -315,8 +307,8 @@ async function saveNewUserInContacts(email) {
     const NR = users.length - 1;
     const existingUser = contactJSON.some(contact => contact.email === email);
     const randomColorIndex = Math.floor(Math.random() * COLORS.length);
-    if(existingUser === false){
-        let contact = {"email": users[NR].email, "initials": users[NR].initials, "name": users[NR].name, "bgColor": COLORS[randomColorIndex]}
+    if (existingUser === false) {
+        let contact = { "email": users[NR].email, "initials": users[NR].initials, "name": users[NR].name, "bgColor": COLORS[randomColorIndex] }
         contactJSON.push(contact);
         setItem(KEY_for_JSON_CONTACS, contactJSON);
     }
@@ -369,7 +361,7 @@ function displayUserMessageOrRedirect(user) {
  */
 function displayUserNotFoundMessage() {
     const message = document.getElementById('message');
-    const messageResponsiv = document.getElementById('confirmTextResponsivLogin');   
+    const messageResponsiv = document.getElementById('confirmTextResponsivLogin');
     message.style.display = 'flex';
     message.innerHTML = generateHTMLifNotUserDesktop();
     messageResponsiv.style.display = 'inline';

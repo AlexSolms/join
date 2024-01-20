@@ -260,7 +260,7 @@ function toggleDivUsrDropVsMemberDisk(desk) {
 
 /**
  * This function recaluclates all task ids and retrun a task id for the new added task
- * @returns 
+ * @returns -task id for the new added task
  */
 function calcTaskId() {
     for (let i = 0; i < taskJson.length; i++) {

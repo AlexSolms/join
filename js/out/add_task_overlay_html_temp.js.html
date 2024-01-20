@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="utf-8">
-    <title>JSDoc: Source: script.js</title>
+    <title>JSDoc: Source: add_task_overlay_html_temp.js</title>
 
     <script src="scripts/prettify/prettify.js"> </script>
     <script src="scripts/prettify/lang-css.js"> </script>
@@ -17,7 +17,7 @@
 
 <div id="main">
 
-    <h1 class="page-title">Source: script.js</h1>
+    <h1 class="page-title">Source: add_task_overlay_html_temp.js</h1>
 
     
 
@@ -26,75 +26,213 @@
     
     <section>
         <article>
-            <pre class="prettyprint source linenums"><code>const KEY_for_JSON_TASKS = 'Join-AlexS_tasks';
-const KEY_for_JSON_PW = 'Join-AlexS_pw';
-const KEY_for_JSON_CONTACS = 'Join-AlexS_contacts'
-const STORAGE_TOKEN = 'AP8HGKXJ09YGJO35Z6D98FT2DKF0XU3EI7FODN1B';
-const STORAGE_URL = 'https://remote-storage.developerakademie.org/item';
-const COLORS =['#FF7A00', '#FF5EB3','#6E52FF','#9327FF','#00BEE8','#1FD7C1','#FF745E','#FFA35E','#FC71FF','#FFC701','#0038FF','#C3FF2B','#FFE62B','#FF4646','#FFBB2B'];
-let taskJson = [];
-let contactJSON = {};
-let loginJson = {};
-let afterSetItemServerAnswer = {};
-
-/**
- * This function saves Data into the backend.
- * 
- * @param {string} key - Takes a key for any sort of data.
- * @param {string} value - Takes a value in form of JSON.
- * @returns the stringifyed data.
+            <pre class="prettyprint source linenums"><code>/**
+ * this function contains the HTML code for the add Task ovlerlay
  */
-async function setItem(key, value) {
-    const payload = { key, value, token: STORAGE_TOKEN };
-    return fetch(STORAGE_URL, { method: 'POST', body: JSON.stringify(payload)})
-    .then(res => res.json());
+function htmlAddTaskOverlay() {
+    document.getElementById('idAddTaskOverlay').innerHTML = /*html*/`
+    &lt;section id="idBgAddTaskOverlay" class="backgroundAddTaskOverlay" onclick="openOrCloseAddTaskOv('idBgAddTaskOverlay')">
+        &lt;form id="idAddTaskForm" onsubmit="storeNewTask(true); return false" class="addTaskOvGeneralSettings" onclick="innerClick(event)" autocomplete="off">
+            &lt;div class="d-flex justify-content-between align-items-center headlineAddTaskOv"> 
+                &lt;h1 id="idHeadlineAddTask" class="">Add Task&lt;/h1>
+                &lt;img onclick="openOrCloseAddTaskOv('idBgAddTaskOverlay')" class="closeResponsive" src="../assets/img/cancel_contactOverlay.svg">
+            &lt;/div>
+            &lt;div id="idContentContainerAddTaskOv" class="contentContainerAddTaskOv">
+                &lt;div id="idContentDeskLeftContainerAddTaskOv" class="ContentDeskContainerAddTaskOv">
+                    &lt;div id="idInputTitleContainerAddTaskOv" class="d-flex flex-column">
+                        &lt;label for="idInputTitleAddTaskOv">Title&lt;/label>
+                        &lt;input id="idInputTitleAddTaskOv" maxlength="48" class="inputTitleAddTaskOv" type="text"
+                            placeholder="Enter a title" required>
+                        &lt;div class="readWarningTexbox">&lt;span id="idSpanTitle" class="requiredInfo d-none">This field is required&lt;/span>&lt;/div>
+                    &lt;/div>
+                    &lt;div id="idInputDescriptionContainerAddTaskOv" class="mt-1 d-flex flex-column">
+                        &lt;label for="idInputDescriptionAddTaskOv">Description&lt;/label>
+                        &lt;textarea id="idInputDescriptionAddTaskOv" class="inputDescriptionAddTaskOv" name="inputDescription"
+                            placeholder="Enter a Description" required>&lt;/textarea>
+                        &lt;div class="readWarningTexbox">&lt;span id="idSpanDesr" class="requiredInfo d-none">This field is required&lt;/span>&lt;/div>
+                    &lt;/div>
+                    &lt;div id="idInputAssignedToContainerDesktopAddTaskOv" class="assingToDesk mt-3 flex-column"> 
+                        &lt;label for="idInputAssignedToAddTaskDeskOv">Assigned To&lt;/label>
+                        &lt;div id="idSelectMultUserDeskOv" class="selectMultUserOv" onclick="showUserNames('DeskOv')"> 
+                            &lt;input type="text" readonly id="idInputAssignedToAddTaskDeskOv" class="selectContainerOv selectArrow"
+                                placeholder="Select contacts to assign" onkeypress="return event.keyCode != 13;">
+                        &lt;/div>
+                        &lt;div id="idSelectedUserAddTaskDeskOv" class="d-flex">&lt;/div>
+                        &lt;div id="idChkSelectMultUserOuterConDeskOv" class=""> 
+                            &lt;div id="idCheckboxesSelectMultUserDeskOv" class="checkboxesSelectMultUserOv">
+                            &lt;/div>
+                        &lt;/div>
+                    &lt;/div>
+                &lt;/div>
+                &lt;div id="idContentDeskmiddleContainerAddTaskOv" class="ContentDeskmiddleContainerAddTaskOv">&lt;/div>
+                &lt;div  id="idContentDeskRightContainerAddTaskOv" class="ContentDeskContainerAddTaskOv">
+                    &lt;div id="idContentDeskRightContainerFlipConAddTaskOv" class="flip">
+                        &lt;div id="idPriorityContainerAddTaskOv" class="mt-1 d-flex flex-column">
+                            &lt;span for="idPriorityAddTaskOv">Prio&lt;/span>
+                            &lt;div id="idPriorityAddTaskOv"
+                                class="d-flex flex-row justify-content-between priorityButtonContainerAddTaskOv">
+                                &lt;div id="idurgentContainerAddTaskOv" onclick="highlight('urgent')" class="prioContainerAddTaskOv">
+                                    &lt;span for="idUrgentIMGAddTaskOv">Urgent&lt;/span>
+                                    &lt;img id="idurgentIMGAddTaskOv" src="../assets/img/prio_urgent.svg" class="">
+                                &lt;/div>
+                                &lt;div id="idmediumContainerAddTaskOv" onclick="highlight('medium')" class="prioContainerAddTaskOv medium">
+                                    &lt;span for="idMediumIMGAddTaskOv">Medium&lt;/span>
+                                    &lt;img id="idmediumIMGAddTaskOv" src="../assets/img/prio_medium_white.svg" class="">
+                                &lt;/div>
+                                &lt;div id="idlowContainerAddTaskOv" onclick="highlight('low')" class="prioContainerAddTaskOv">
+                                    &lt;span for="idLowIMGAddTaskOv">Low&lt;/span>
+                                    &lt;img id="idlowIMGAddTaskOv" src="../assets/img/prio_low.svg" class="">
+                                &lt;/div>
+                            &lt;/div>
+                        &lt;/div>
+                        &lt;div id="idDueDateContainerAddTaskOv" class="d-flex flex-column">
+                            &lt;label for="idInputDueDateAddTaskOv">Due Date&lt;/label>
+                            &lt;input id="idInputDueDateAddTaskOv" class="inputDueDateAddTaskOv" type="date" value="" min="2023-08-31"
+                                required>
+                            &lt;div class="readWarningTexbox">&lt;span id="idSpanDueDate" class="requiredInfo d-none">This field is required&lt;/span>&lt;/div>
+                        &lt;/div>
+                    &lt;/div>
+                    &lt;div id="idInputCategoryContainerAddTaskOv" class="mt-1 d-flex flex-column">
+                        &lt;label for="idSelectCategoryAddTaskOv">Category&lt;/label>
+                        &lt;select id="idSelectCategoryAddTaskOv" class="selectContainerOv selectArrow" name="category" required>
+                            &lt;option value="" disabled selected hidden>Select task category&lt;/option>
+                            &lt;option value="Technical Task">Technical Task&lt;/option>
+                            &lt;option value="User Story">User Story&lt;/option>
+                        &lt;/select>
+                        &lt;div class="readWarningTexbox">&lt;span id="idSpanSelectCat" class="requiredInfo d-none">This field is required&lt;/span>&lt;/div>
+                    &lt;/div>
+                    &lt;div id="idInputAssignedToContainerAddTaskOv" class="assingToMob mt-3 d-flex flex-column">
+                        &lt;label for="idInputAssignedToAddTaskOv">Assigned To&lt;/label>
+                        &lt;div id="idSelectMultUserOv" class="selectMultUserOv" onclick="showUserNames('Ov')"> 
+                            &lt;input type="search" readonly id="idInputAssignedToAddTaskOv" class="hideSearchX selectContainerOv selectArrow"
+                                placeholder="Select contacts to assign" onkeypress="return event.keyCode != 13;">
+                        &lt;/div>
+                        &lt;div id="idSelectedUserAddTaskOv" class="d-flex">&lt;/div>
+                        &lt;div id="idChkSelectMultUserOuterConOv" class=""> 
+                            &lt;div id="idCheckboxesSelectMultUserOv" class="checkboxesSelectMultUserOv">
+                            &lt;/div>
+                        &lt;/div>
+                    &lt;/div>
+                    &lt;div id="idSubtaskContainerAddTaskOv" class="mt-3">
+                        &lt;label for="idSubtaskAddTaskOv">Subtask&lt;/label>
+                        &lt;div id="idSubtaskSubContainerAddTaskOv" onfocus="switchIons(1)" onblur="switchIons(1)" 
+                            class="d-flex flex-row justify-content-between align-items-center subtaskSubContainerAddTaskOv">
+                            &lt;input id="idSubtaskAddTaskOv" onfocus="switchIons(1)" 
+                                class="subtaskAddTaskOv" type="text" placeholder="Add new subtask" onkeypress="return event.keyCode != 13;">
+                            &lt;div id="idSwitchIcons">
+                                &lt;img id="idSubtaskPlus" src="../assets/img/plus.svg" onclick="switchIons(2)">
+                                &lt;div id="idSubtaskIconContainer" class="subtaskIconContainer d-none">
+                                    &lt;img src="../assets/img/taskOverlayClose.svg" alt="" onclick="switchIons(4)">
+                                    &lt;div id="idSubTaskDivider" class="subTaskDivider">&lt;/div>
+                                    &lt;img src="../assets/img/checkBlack.svg" alt="" onclick="addSubtask(); switchIons(4)">
+                                &lt;/div>
+                            &lt;/div>
+                        &lt;/div>
+                    &lt;/div>
+                    &lt;div id="idRenderedSubtaskContainerAddTaskOv">
+                        &lt;ul id="idRenderedSubtaskAddTaskOv">&lt;/ul>
+                    &lt;/div>
+                &lt;/div>
+            &lt;/div>
+            &lt;div id="idSubmitContainerAddTaskOv" onsubmit="storeNewTask(true)"
+                class="submitContainerAddTaskOv d-flex justify-content-end align-items-center gap-2">
+                &lt;button class="taskButton" type="reset" onclick="resetfields()">clear&lt;/button>
+                &lt;button id="idSubmitButtonAddTaskOv" type="submit" class="taskButton">Create Task &lt;img
+                        src="../assets/img/check.svg">&lt;/button>
+            &lt;/div>
+        &lt;/form>    
+    &lt;/section>`
 }
 
 /**
- * This function recieves and loads Data from the backend.
- * 
- * @param {string} key - Key of an data type e.g. an object 
- * @returns parsed Data from the backend.
+ * this function returns the HTML code for the add task button
+ * @returns - HTML code for add contact button
  */
-async function getItem(key) {
-    const url = `${STORAGE_URL}?key=${key}&amp;token=${STORAGE_TOKEN}`;
-    return fetch(url).then(res => res.json());
+function userOvHTMLButton() {
+    return /*html*/`
+    &lt;div id="idChkSelectMultUserButtonOv" class="d-flex  ">
+        &lt;button class="flex-fill justify-content-center taskButton" onclick="callAddContact()">
+            &lt;div>
+                &lt;span>Add new cotact&lt;/span>
+                &lt;img src="" alt="">
+            &lt;/div>
+        &lt;/button>
+    &lt;/div>`
 }
 
 /**
- * This function returns the first letters of member name i.e. "John Doe"
- * used in headFootTemplate.js and board.js
- * 
- * @param {string} member - this ist the full name of the member
- * @returns initials of user i.e. "JD" in upper case
+ * this function returns the code for a member badge
+ * @param {String} memberName - name of member
+ * @param {String} memberColor - background color for the member badge
+ * @param {String} memberinitials - initials of member
+ * @param {Number} i - to address the coorect HTML ids
+ * @returns - member badge
  */
-function memberInitials(member){
-    let initials = member.split(' ').map(name => name[0]).join('');
-    return initials.toUpperCase();
+function userOvHTML(memberName, memberColor, memberinitials, i) {
+    return `
+    &lt;div id="idAssingedToCon${i}" class="assingedToMembers hoverAssingedTo" onclick="toggleChkBox(${i})">
+        &lt;div id="idAssingedToInitialsOv${i}" class="memberDiskOv memberBgColor${memberColor}">${memberinitials}
+        &lt;/div>
+        &lt;span id="idAssingedToName${i}" class="assignToName">${memberName}&lt;/span>
+        &lt;div class="chkContainerAssingdTo">
+            &lt;input id=idAssingedToChk${i} type="checkbox" disabled class="check_box chkHeight">
+            &lt;label for=idAssingedToChk${i}>&lt;/label>
+        &lt;/div>
+    &lt;/div>`
 }
 
 /**
- * this funktion returns the JSON based on the key
- * 
- * 
- * @param {const} key - which data should be requested
- * @returns - JSON
+ * this function provides the HTML code for the subtasks for a task
+ * @param {Number} count - the subtask number
+ * @returns - HTML Template for sub tastl
  */
-async function loadJSON(key) {
-    let serverAnswer = await getItem(key);
-    return JSON.parse(serverAnswer.data.value);
+function subtaskHTML(count) {
+    return /*html*/`
+    &lt;li id="idSubTask${count}" class="subTaskElement">
+        &lt;div id="idSubTaskdefaultContainer${count}" class="d-flex justify-content-between mt-2">
+            &lt;span id="idSubTaskText${count}">${subtaskObj[count]}&lt;/span>
+            &lt;div id="idSubTaskEditDeleteContainer${count}">
+                &lt;img onclick="editSubtask(${count})" src="../assets/img/edit_subtask.svg" class="customButton" role="button">
+                &lt;img onclick="deleteSubtask(${count})" src="../assets/img/delete_subtask.svg" class="customButton" role="button">
+            &lt;/div>
+        &lt;/div>
+        &lt;div id="idSubTaskTextEditContainer${count}"
+            class="d-none flex-row justify-content-between align-items-center mt-2 subtaskSubEditOv">
+            &lt;input id="idSubTaskTextEdit${count}" class="" type="text">
+            &lt;div id="idSubtaskEditIconContainer${count}" class="d-flex flex-row SubtaskEditIconContainer">
+                &lt;img src="../assets/img/delete_subtask.svg" class="customButton" role="button" alt="" onclick="deleteSubtask(${count})">
+                &lt;div id="idSubTaskDivider2${count}" class="subTaskDivider">&lt;/div>
+                &lt;img src="../assets/img/checkBlack.svg" alt="" class="customButton" role="button" onclick="editSubtaskText(${count})">
+            &lt;/div>
+        &lt;/div>
+    &lt;/li>`
 }
 
 /**
- * This function prevents the onclick event of the parent, used in boardSigleTask.js and boardSingleTaskOverlay.js
- * 
- * @param {event} event - onclick event
+ * this function returns the HTML code for a single member of this task
+ * @param {string} memberColor - background color for disk of member
+ * @param {string} memberinitials - intitials of member
+ * @param {number} i - count of loop
+ * @returns - HTML for single member of this task
  */
-function innerClick(event) {
-    event.stopPropagation(); // prevents event bubbling
-  }
+function taskOverlayMemberDiskHTML(memberColor, memberinitials, i) {
+    return /*html*/ `
+    &lt;div id="idTaskMemberSubContainerOV${i}" class="singleTaskMemberSubContainerOV px-1">
+        &lt;div id="idTaskMemberInitialsOv${i}" class="memberDiskOv memberBgColor${memberColor}">${memberinitials}&lt;/div>
+    &lt;/div>`
+}
 
- </code></pre>
+/**
+ * 
+ * @param {Number} membNr - count of additional Members
+ */
+function additionalMember(membNr, singleTask) {
+    return /*html*/ `
+    &lt;div id="idTaskMemberSubContainerOV3" class="singleTaskMemberSubContainerOV px-1 ">
+        &lt;div id="idTaskMemberInitialsOv3" class="memberDiskOv memberAdditionals">+${membNr}&lt;/div>
+    &lt;/div>`
+} 
+</code></pre>
         </article>
     </section>
 
